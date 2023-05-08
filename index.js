@@ -1,8 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const api = require("./apiRoutes/api");
 
@@ -12,14 +10,12 @@ const app = express();
 
 const port = process.env.PORT;
 
-const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = process.env.JWT_SECREATE;
-
 app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
   origin: "http://localhost:3000",
+  origin: "http://localhost:3002",
 };
 app.use(cors(corsOptions));
 

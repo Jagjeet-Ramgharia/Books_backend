@@ -145,10 +145,33 @@ const addReviews = async (req, res) => {
   }
 };
 
+const getReviews = async (req,res) => {
+ try {
+   const bookId = req.params.bookId
+   const book = await Book.find({id:bookId})
+   if(!book){
+    return res.status(400).json({
+      message:"Book not found"
+    })
+   }
+   const reviews = book[0].reviews
+   const allReviews = await ReviewSchema.find({_id : {$in : reviews}})
+   return res.status(200).json({
+    message:"Reviews fetch successfully",
+    reviews: allReviews
+   })
+ } catch (error) {
+  return res.status(500).json({
+    message:"Something went wrong"
+  })
+ }
+}
+
 module.exports = {
   getAllBooks,
   addBooks,
   getFavourite,
   deleteBooks,
   addReviews,
+  getReviews
 };

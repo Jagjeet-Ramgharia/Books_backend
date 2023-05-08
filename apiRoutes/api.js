@@ -2,10 +2,7 @@ const router = require("express").Router();
 const {
   createUserSchema,
 } = require("../ValidationSchemas/RegistrationValidationSchema");
-const User = require("../Models/UserModel");
-const Book = require("../Models/BooksModel");
 const userAuthentication = require("../MiddleWares/AuthMiddleWare.js");
-const ReviewSchema = require("../Models/ReviewSchema");
 const { loginUserValidation } = require("../ValidationSchemas/LoginValidation");
 const {
   addBookValidation,
@@ -13,8 +10,6 @@ const {
 const {
   AddReviewValidation,
 } = require("../ValidationSchemas/AddReviewValidation");
-const AuthorModel = require("../Models/AuthorModel");
-const GenreSchema = require("../Models/GenreSchema");
 const AuthController = require("../controllers/AuthController");
 const SeedingController = require("../controllers/SeedingController");
 const GenreController = require("../controllers/GenreController");
@@ -74,22 +69,13 @@ router.post(
   BooksController.addReviews
 );
 
-// Search for books
-// router.get("/search", userAuthentication, async (req, res) => {
-//   const { q } = req.query;
-//   try {
-//     const books = await Book.find({
-//       $or: [
-//         { title: { $regex: q, $options: "i" } },
-//         { author: { $regex: q, $options: "i" } },
-//         { genre: { $regex: q, $options: "i" } },
-//       ],
-//     });
-//     res.status(200).json({ books: books });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Server Error");
-//   }
-// });
+
+// get reviews of a books
+router.get(
+  "/get-reviews/:bookId",
+  // userAuthentication,
+  BooksController.getReviews
+);
+
 
 module.exports = router;
